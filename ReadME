@@ -1,1 +1,10 @@
 MERN Stack based authentication project
+
+Initial features Added:
+password hashing using Bcrypt
+JWT based token for email verfication
+Functionality Added:
+register,login,logout
+welcome email,send otp to verifiy mail and otp verification.
+
+Dependencies: express , nodemon ,cors,bcrypt, jwt, dot env,mongoose,nodemailer,cookie-parser
