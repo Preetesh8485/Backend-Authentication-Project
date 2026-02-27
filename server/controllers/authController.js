@@ -128,3 +128,64 @@ export const verfiyEmail=async(req,res)=>{
         return res.json({success:false,message:error.message});
     }
 }
+export const isAuthenticated= async(req,res)=>{
+    try {
+        return res.json({success:true});
+    } catch (error) {
+        res.json({success:false,message:error.message});
+    }
+}
+export const sendResetOtp = async(req,res)=>{
+    const {email}=req.body;
+    if(!email){
+        return res.json({success:false,message:"Email required"});
+    }
+    try {
+        const user =await userModel.findOne({email});
+        if(!user){
+            return res.json({success:false,message:"User not found"});
+        }
+       const otp= String(Math.floor(100000+Math.random()*900000));
+       user.OTPReset =otp;
+       user.OTPResetAt = Date.now()+15*60*1000;
+       await user.save();
+
+       const mailOptions={
+        from:process.env.SENDER_EMAIL,
+        to:user.email,
+        subject:"Password Reset otp",
+        text:`OTP for password reset : ${otp}`
+       }
+       await transporter.sendMail(mailOptions);
+        return res.json({success:true,message:"password reset otp sent successfully to user email"});
+    } catch (error) {
+        return res.json({success:false,message:error.message});
+    }
+}
+
+export const resetPassword = async(req,res)=>{
+    const{email,otp,newPassword}=req.body;
+    if(!email||!otp||!newPassword){
+        return res.json({success:false,message:"missing Details!"});
+    }
+    try {
+        const user = await userModel.findOne({email});
+        if(!user){
+            return res.json({success:false,message:"User not found"});
+        }
+        if(user.OTPReset ===""||user.OTPReset!==otp){
+            return res.json({success:false,message:"invalid OTP"});
+        }
+        if(user.OTPResetAt<Date.now()){
+            return res.json({success:false,message:"OTP expired"});
+        }
+        const hashedPassword = await bcrypt.hash(newPassword,10);
+        user.password=hashedPassword;
+        user.OTPReset='';
+        user.OTPResetAt=0;
+        await user.save();
+        return res.json({success:true,message:'Password changed successfully'})
+    } catch (error) {
+        return res.json({success:false,message:error.message});
+    }
+}
