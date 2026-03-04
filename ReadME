@@ -1,100 +1,118 @@
-# Authentication-System
-# 🔐 Modern Auth System
+🔐 Modern Authentication System
 
-A **modern full-stack authentication system** built using the **MERN stack** that demonstrates secure authentication techniques used in real production applications.
+A modern full-stack authentication system built using the MERN stack that demonstrates secure authentication techniques used in real-world applications.
 
-This project implements **secure login systems, JWT authentication, Google OAuth login, OTP verification, and password reset workflows** while maintaining best security practices such as password hashing, token-based authentication, and HTTP-only cookies.
+The project implements JWT authentication, Google OAuth login, OTP email verification, and secure password reset workflows, while following best security practices such as password hashing, token-based authentication, HTTP-only cookies, and environment variable protection.
 
----
+🚀 Features
+🔑 Authentication
 
-# 🚀 Features
+User Registration & Login
 
-### 🔑 Authentication
+Password hashing using bcryptjs
 
-* User **Registration & Login**
-* **Password hashing with bcrypt**
-* **JWT-based authentication**
-* Authentication stored using **HTTP-only cookies**
-* Secure logout system
+JWT-based authentication
 
-### ✉️ Email Verification
+Authentication stored using HTTP-only cookies
 
-* **OTP based email verification**
-* Verification OTP sent using **Nodemailer**
-* OTP expiration protection
+Secure logout functionality
 
-### 🔁 Password Reset
+✉️ Email Verification
 
-* Secure **password reset using OTP**
-* Email-based password reset verification
-* Expiring OTP tokens
+OTP-based email verification
 
-### 🌐 Google Authentication
+OTP sent using Nodemailer
 
-* **Google OAuth Login**
-* Token verification using **google-auth-library**
-* Automatic user account creation for new Google users
+OTP expiration protection
 
-### 🔒 Security Practices
+🔁 Password Reset
 
-* Password hashing with **bcrypt**
-* **JWT tokens** for authentication
-* Secure **HTTP-only cookies**
-* Environment variable protection using **dotenv**
+Secure password reset via email OTP verification
 
-### 🎨 Frontend UI
+Expiring OTP tokens
 
-* Responsive UI built with **React + TailwindCSS**
-* Toast notifications using **React Toastify**
-* Client-side routing using **React Router**
-* API communication via **Axios**
+Encrypted password update
 
-### 🤖 Generative AI Usage
+🌐 Google Authentication
 
-Some UI icons and visual assets used in the interface were **generated using Generative AI tools** to enhance the user interface and improve the visual design of authentication pages.
+Google OAuth login
 
----
+Token verification using google-auth-library
 
-# 🧠 Tech Stack
+Automatic account creation for new users
 
-## Frontend
+🔒 Security Practices
 
-* React.js
-* Tailwind CSS
-* Axios
-* React Router
-* React Toastify
+Password hashing with bcryptjs
 
-## Backend
+JWT token authentication
 
-* Node.js
-* Express.js
-* MongoDB
-* Mongoose
-* Nodemon
+HTTP-only cookies
 
-## Authentication & Security
+CORS configuration for secure API access
 
-* JWT (jsonwebtoken)
-* bcrypt
-* cookie-parser
-* dotenv
+Environment variable protection using dotenv
 
-## Email Services
+🎨 Frontend
 
-* Nodemailer
-* OTP email verification templates
+Responsive UI built with React + TailwindCSS
 
-## Backend Utilities
+Toast notifications using React Toastify
 
-* CORS
-* Express middleware
+Client-side routing with React Router
 
----
+API communication using Axios
 
-# 🏗️ Project Architecture
+🧠 Tech Stack
+Frontend
 
-```text
+React
+
+TailwindCSS
+
+Axios
+
+React Router DOM
+
+React Toastify
+
+@react-oauth/google
+
+Backend
+
+Node.js
+
+Express.js
+
+MongoDB
+
+Mongoose
+
+Nodemon
+
+Authentication & Security
+
+JSON Web Token (JWT)
+
+bcryptjs
+
+cookie-parser
+
+cors
+
+dotenv
+
+Email Services
+
+Nodemailer
+
+OAuth
+
+Google OAuth
+
+google-auth-library
+
+🏗️ Project Architecture
 Frontend (React)
         │
         │  API Requests (Axios)
@@ -104,72 +122,47 @@ Backend (Node.js + Express)
         │ Authentication Logic
         ▼
 MongoDB Database
-```
-
----
-
-# 🔄 Authentication Flow
-
-## User Registration
-
-```
+🔄 Authentication Flow
+User Registration
 User registers
       │
       ▼
-Password hashed with bcrypt
+Password hashed using bcryptjs
       │
       ▼
-User saved to MongoDB
+User stored in MongoDB
       │
       ▼
 JWT token generated
       │
       ▼
 Token stored in HTTP-only cookie
-```
-
----
-
-## User Login
-
-```
+User Login
 User enters email + password
         │
         ▼
-Password compared with bcrypt
+Password verified using bcryptjs
         │
         ▼
 JWT token generated
         │
         ▼
 Token stored in secure cookie
-```
-
----
-
-## Google Login
-
-```
+Google Login
 User clicks Google Login
         │
         ▼
 Google returns credential token
         │
         ▼
-Backend verifies token
+Backend verifies token using google-auth-library
         │
         ▼
 User created or fetched from database
         │
         ▼
 JWT token generated
-```
-
----
-
-## Password Reset
-
-```
+Password Reset
 User requests password reset
         │
         ▼
@@ -180,104 +173,55 @@ User verifies OTP
         │
         ▼
 User sets new password
-```
-
----
-
-# ⚙️ Installation
-
-## Clone the repository
-
-```bash
-git clone https://github.com/Preetesh8485/modern-auth-system.git
-```
-
----
-
-## Install backend dependencies
-
-```bash
+⚙️ Installation
+Clone the repository
+git clone https://github.com/Preetesh8485/Modern-Auth-Project.git
+Install Backend Dependencies
 cd backend
 npm install
-```
-
----
-
-## Install frontend dependencies
-
-```bash
+Install Frontend Dependencies
 cd frontend
 npm install
-```
+🔑 Environment Variables
 
----
+Create .env files for both backend and frontend.
 
-# 🔑 Environment Variables
-
-Create `.env` files for both frontend and backend.
-
-### Backend `.env`
-
-```
+Backend .env
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 SENDER_EMAIL=your_email
 EMAIL_PASSWORD=your_email_password
 GOOGLE_CLIENT_ID=your_google_client_id
-```
-
----
-
-### Frontend `.env`
-
-```
+Frontend .env
 VITE_GOOGLE_CLIENT_ID=your_google_client_id
-```
-
----
-
-# ▶️ Running the Project
-
-Start backend server:
-
-```bash
+▶️ Running the Project
+Start Backend
 npm run server
-```
-
-Start frontend:
-
-```bash
+Start Frontend
 npm run dev
-```
-
----
-
-# 📚 Learning Outcomes
+📚 Learning Outcomes
 
 This project demonstrates knowledge of:
 
-* Full-stack authentication architecture
-* Secure password storage
-* JWT authentication
-* OAuth integration
-* Email-based verification systems
-* Secure API design
-* Cookie-based authentication
+Full-stack authentication architecture
 
----
+Secure password storage
 
-# 👨‍💻 Author
+JWT authentication
 
-**Preetesh Khadanga**
+OAuth integration
 
+Email-based verification systems
+
+Secure API design
+
+Cookie-based authentication
+
+👨‍💻 Author
+
+Preetesh Khadanga
 IT Student | Full Stack Developer
 
 GitHub:
 https://github.com/Preetesh8485
-
----
-
-# ⭐ Support
-
-If you found this project useful, consider giving it a **star ⭐ on GitHub**.
