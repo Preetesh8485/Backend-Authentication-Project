@@ -1,10 +1,283 @@
-MERN Stack based authentication project
+# Authentication-System
+# 🔐 Modern Auth System
 
-Initial features Added:
-password hashing using Bcrypt
-JWT based token for email verfication
-Functionality Added:
-register,login,logout
-welcome email,send otp to verifiy mail and otp verification.
+A **modern full-stack authentication system** built using the **MERN stack** that demonstrates secure authentication techniques used in real production applications.
 
-Dependencies: express , nodemon ,cors,bcrypt, jwt, dot env,mongoose,nodemailer,cookie-parser
+This project implements **secure login systems, JWT authentication, Google OAuth login, OTP verification, and password reset workflows** while maintaining best security practices such as password hashing, token-based authentication, and HTTP-only cookies.
+
+---
+
+# 🚀 Features
+
+### 🔑 Authentication
+
+* User **Registration & Login**
+* **Password hashing with bcrypt**
+* **JWT-based authentication**
+* Authentication stored using **HTTP-only cookies**
+* Secure logout system
+
+### ✉️ Email Verification
+
+* **OTP based email verification**
+* Verification OTP sent using **Nodemailer**
+* OTP expiration protection
+
+### 🔁 Password Reset
+
+* Secure **password reset using OTP**
+* Email-based password reset verification
+* Expiring OTP tokens
+
+### 🌐 Google Authentication
+
+* **Google OAuth Login**
+* Token verification using **google-auth-library**
+* Automatic user account creation for new Google users
+
+### 🔒 Security Practices
+
+* Password hashing with **bcrypt**
+* **JWT tokens** for authentication
+* Secure **HTTP-only cookies**
+* Environment variable protection using **dotenv**
+
+### 🎨 Frontend UI
+
+* Responsive UI built with **React + TailwindCSS**
+* Toast notifications using **React Toastify**
+* Client-side routing using **React Router**
+* API communication via **Axios**
+
+### 🤖 Generative AI Usage
+
+Some UI icons and visual assets used in the interface were **generated using Generative AI tools** to enhance the user interface and improve the visual design of authentication pages.
+
+---
+
+# 🧠 Tech Stack
+
+## Frontend
+
+* React.js
+* Tailwind CSS
+* Axios
+* React Router
+* React Toastify
+
+## Backend
+
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* Nodemon
+
+## Authentication & Security
+
+* JWT (jsonwebtoken)
+* bcrypt
+* cookie-parser
+* dotenv
+
+## Email Services
+
+* Nodemailer
+* OTP email verification templates
+
+## Backend Utilities
+
+* CORS
+* Express middleware
+
+---
+
+# 🏗️ Project Architecture
+
+```text
+Frontend (React)
+        │
+        │  API Requests (Axios)
+        ▼
+Backend (Node.js + Express)
+        │
+        │ Authentication Logic
+        ▼
+MongoDB Database
+```
+
+---
+
+# 🔄 Authentication Flow
+
+## User Registration
+
+```
+User registers
+      │
+      ▼
+Password hashed with bcrypt
+      │
+      ▼
+User saved to MongoDB
+      │
+      ▼
+JWT token generated
+      │
+      ▼
+Token stored in HTTP-only cookie
+```
+
+---
+
+## User Login
+
+```
+User enters email + password
+        │
+        ▼
+Password compared with bcrypt
+        │
+        ▼
+JWT token generated
+        │
+        ▼
+Token stored in secure cookie
+```
+
+---
+
+## Google Login
+
+```
+User clicks Google Login
+        │
+        ▼
+Google returns credential token
+        │
+        ▼
+Backend verifies token
+        │
+        ▼
+User created or fetched from database
+        │
+        ▼
+JWT token generated
+```
+
+---
+
+## Password Reset
+
+```
+User requests password reset
+        │
+        ▼
+OTP sent via email
+        │
+        ▼
+User verifies OTP
+        │
+        ▼
+User sets new password
+```
+
+---
+
+# ⚙️ Installation
+
+## Clone the repository
+
+```bash
+git clone https://github.com/Preetesh8485/modern-auth-system.git
+```
+
+---
+
+## Install backend dependencies
+
+```bash
+cd backend
+npm install
+```
+
+---
+
+## Install frontend dependencies
+
+```bash
+cd frontend
+npm install
+```
+
+---
+
+# 🔑 Environment Variables
+
+Create `.env` files for both frontend and backend.
+
+### Backend `.env`
+
+```
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+SENDER_EMAIL=your_email
+EMAIL_PASSWORD=your_email_password
+GOOGLE_CLIENT_ID=your_google_client_id
+```
+
+---
+
+### Frontend `.env`
+
+```
+VITE_GOOGLE_CLIENT_ID=your_google_client_id
+```
+
+---
+
+# ▶️ Running the Project
+
+Start backend server:
+
+```bash
+npm run server
+```
+
+Start frontend:
+
+```bash
+npm run dev
+```
+
+---
+
+# 📚 Learning Outcomes
+
+This project demonstrates knowledge of:
+
+* Full-stack authentication architecture
+* Secure password storage
+* JWT authentication
+* OAuth integration
+* Email-based verification systems
+* Secure API design
+* Cookie-based authentication
+
+---
+
+# 👨‍💻 Author
+
+**Preetesh Khadanga**
+
+IT Student | Full Stack Developer
+
+GitHub:
+https://github.com/Preetesh8485
+
+---
+
+# ⭐ Support
+
+If you found this project useful, consider giving it a **star ⭐ on GitHub**.
