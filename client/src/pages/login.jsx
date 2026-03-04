@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { AppContent } from '../context/AppContext';
 import axios from "axios";
 import { toast } from 'react-toastify';
+import { GoogleLogin } from "@react-oauth/google";
 
 
 const Login = () => {
@@ -55,6 +56,31 @@ const Login = () => {
   } catch (error) {
     console.error(error);
     toast.error(error.response?.data?.message || "Something went wrong");
+  }
+  
+};
+const handleGoogleLogin = async (credentialResponse) => {
+  try {
+    console.log(credentialResponse)
+    const token = credentialResponse.credential;
+    
+    const { data } = await axios.post(
+      backendUrl + "/api/auth/google-login",
+      { token }
+    );
+
+    if (data.success) {
+      setIsLoggedin(true);
+      getUserData();
+      navigate("/");
+      toast.success("Google login successful");
+    } else {
+      toast.error(data.message);
+    }
+
+  } catch (error) {
+    console.log(error);
+    toast.error("Google login failed");
   }
 };
     return (
@@ -124,6 +150,22 @@ const Login = () => {
                     >
                         {state}
                     </button>
+                    {state === "Login" && (
+<>
+  <div className="flex items-center gap-3 my-4">
+    <div className="flex-1 h-[1px] bg-gray-600"></div>
+    <p className="text-xs text-gray-400">OR</p>
+    <div className="flex-1 h-[1px] bg-gray-600"></div>
+  </div>
+
+  <div className="flex justify-center">
+    <GoogleLogin
+      onSuccess={handleGoogleLogin}
+      onError={() => toast.error("Google Login Failed")}
+    />
+  </div>
+</>
+)}
                     {state === 'Sign Up' ? (<p className='text-gray-400 text-center text-xs mt-4 '>Already have an account?{' '}<span onClick={() => setState('Login')} className='text-blue-600 cursor-pointer underline '>Login here</span>
                     </p>) : (<p className='text-gray-400 text-center text-xs mt-4 '>Don't have an account?{' '}<span onClick={() => setState('Sign Up')} className='text-blue-600 cursor-pointer underline '>Sign Up</span>
                     </p>

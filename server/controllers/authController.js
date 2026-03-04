@@ -2,6 +2,8 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken';
 import userModel from '../models/usermodel.js';
 import transporter from '../config/nodemailer.js';
+import { OAuth2Client } from "google-auth-library";
+import { EMAIL_VERIFY_TEMPLATE ,PASSWORD_RESET_TEMPLATE } from '../config/EmailTemplates.js';
 
 export const register = async (req,res)=>{
     const {name,email,password}=req.body;
@@ -102,7 +104,8 @@ export const sendVerifyOtp = async (req,res)=>{
         from:process.env.SENDER_EMAIL,
         to:user.email,
         subject:"Account verification OTP",
-        text:`verification OTP for your account Email: ${otp}`
+        // text:`verification OTP for your account Email: ${otp}`,
+        htmml:EMAIL_VERIFY_TEMPLATE.replace("{{otp}}",otp).replace("{{}}",user.email)
        }
        await transporter.sendMail(mailOptions);
        return res.json({success:true,message:"Verification email sent on email"});
@@ -161,7 +164,8 @@ export const sendResetOtp = async(req,res)=>{
         from:process.env.SENDER_EMAIL,
         to:user.email,
         subject:"Password Reset otp",
-        text:`OTP for password reset : ${otp}`
+        // text:`OTP for password reset : ${otp}`
+        html:PASSWORD_RESET_TEMPLATE.replace("{{otp}}",otp).replace("{{}}",user.email)
        }
        await transporter.sendMail(mailOptions);
         return res.json({success:true,message:"password reset otp sent successfully to user email"});
@@ -196,3 +200,54 @@ export const resetPassword = async(req,res)=>{
         return res.json({success:false,message:error.message});
     }
 }
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+export const googleLogin = async (req, res) => {
+  try {
+
+    const { token } = req.body;
+
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID
+    });
+
+    const payload = ticket.getPayload();
+
+    const email = payload.email;
+    const name = payload.name;
+    const picture = payload.picture;
+
+    let user = await userModel.findOne({ email });
+
+    // create user if not exists
+    if (!user) {
+      user = await userModel.create({
+        name,
+        email,
+        password: "",   // Google users don't need password
+      });
+    }
+
+    const jwtToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    res.cookie("token", jwtToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    });
+
+    return res.json({
+      success: true,
+      user
+    });
+
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: error.message
+    });
+  }
+};
